@@ -1,9 +1,13 @@
 main{
     margin-top:56px;
 }
-h2{
+h2 {
     text-align:center;
 }
 .logo{
     text-align: center;
+}
+h1 {
+    text-align: center;
+    color: darkslateblue;
 }

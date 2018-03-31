@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Категории{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Название</th>
+
+        </tr>
+        {% for categor in category %}
+            <tr>
+                <td>{{ categor.id }} </td>
+                <td><a href="{{ path('category_show',{id:categor.id}) }}">{{ categor.name }} техника</a></td>
+                 </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
