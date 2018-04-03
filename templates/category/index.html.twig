@@ -12,7 +12,7 @@
         {% for categor in category %}
             <tr>
                 <td>{{ categor.id }} </td>
-                <td><a href="{{ path('category_show',{id:categor.id}) }}">{{ categor.name }} техника</a></td>
+                <td><a href="{{ path('category_show',{id:categor.id}) }}">{{ categor.name }} </a></td>
                  </tr>
         {% endfor %}
     </table>
