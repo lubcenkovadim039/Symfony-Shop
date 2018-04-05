@@ -40,6 +40,16 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $top;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
     public function getId()
     {
         return $this->id;
@@ -98,6 +108,33 @@ class Product
 
         return $this;
     }
+
+    public function getTop(): ?bool
+    {
+        return $this->top;
+    }
+
+    public function setTop(bool $top): self
+    {
+        $this->top = $top;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+
+
 
 
 }
