@@ -18,11 +18,11 @@ class DefaultController extends Controller
         $counter++;
         $session->set('page_counter',$counter);
         $repo = $this->getDoctrine()->getRepository(Product::class);
-        $topproducts = $repo->findBy(['top' => 1]);
+        $topproducts = $repo->findBy(['isTop' => 1]);
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'counter' => $counter,
-            'top' => $topproducts
+            'isTop' => $topproducts
         ]);
     }
 

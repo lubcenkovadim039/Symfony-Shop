@@ -43,12 +43,17 @@ class Product
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $top;
+    private $isTop;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+    public function __construct()
+    {
+        $this->isTop = false;
+    }
 
     public function getId()
     {
@@ -109,14 +114,14 @@ class Product
         return $this;
     }
 
-    public function getTop(): ?bool
+    public function getIsTop(): ?bool
     {
-        return $this->top;
+        return $this->isTop;
     }
 
-    public function setTop(bool $top): self
+    public function setIsTop(bool $isTop): self
     {
-        $this->top = $top;
+        $this->isTop = $isTop;
 
         return $this;
     }
