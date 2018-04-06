@@ -9,6 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->isTop = false;
+        $this->image = '//placehold.it/300x200';
+    }
     /**
      * @Route("/product", name ="product")
      */

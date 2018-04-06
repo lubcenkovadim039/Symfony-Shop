@@ -23,7 +23,7 @@
     <div class="card-deck product">
         {% for product in category.products %}
             <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="//placehold.it/300x200" alt="{{ product.title }}">
+            <img class="card-img-top" src="{{ asset(product.image )}}" alt="{{ product.title }}">
             <div class="card-body">
                 <h5 class="card-title">
                     <a href="{{ path('product_show',{id:product.id}) }}" >{{ product.title }}

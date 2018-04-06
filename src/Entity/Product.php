@@ -41,19 +41,16 @@ class Product
     private $category;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, options={"default" : 0})
      */
     private $isTop;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default" : "//placehold.it/300x200"})
      */
     private $image;
 
-    public function __construct()
-    {
-        $this->isTop = false;
-    }
+
 
     public function getId()
     {
