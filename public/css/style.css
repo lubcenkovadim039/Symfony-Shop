@@ -11,3 +11,7 @@ h1 {
     text-align: center;
     color: darkslateblue;
 }
+.card-top {
+    width:250px;
+    height:200px;
+}

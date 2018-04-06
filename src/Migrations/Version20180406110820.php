@@ -8,14 +8,14 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180330165838 extends AbstractMigration
+class Version20180406110820 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE products CHANGE price price NUMERIC(10, 2) DEFAULT NULL');
+        $this->addSql('ALTER TABLE products CHANGE top is_top TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema)
@@ -23,6 +23,6 @@ class Version20180330165838 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE products CHANGE price price NUMERIC(2, 0) DEFAULT NULL');
+        $this->addSql('ALTER TABLE products CHANGE is_top top TINYINT(1) NOT NULL');
     }
 }

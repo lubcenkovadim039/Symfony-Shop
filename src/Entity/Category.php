@@ -51,6 +51,7 @@ class Category
     {
         $this->products = new ArrayCollection();
         $this->subcategory = new ArrayCollection();
+        $this->subcategories = new ArrayCollection();
     }
 
     public function getId()
@@ -138,6 +139,29 @@ class Category
             // set the owning side to null (unless already changed)
             if ($subcategories->getParent() === $this) {
                 $subcategories->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addSubcategory(Category $subcategory): self
+    {
+        if (!$this->subcategories->contains($subcategory)) {
+            $this->subcategories[] = $subcategory;
+            $subcategory->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubcategory(Category $subcategory): self
+    {
+        if ($this->subcategories->contains($subcategory)) {
+            $this->subcategories->removeElement($subcategory);
+            // set the owning side to null (unless already changed)
+            if ($subcategory->getParent() === $this) {
+                $subcategory->setParent(null);
             }
         }
 

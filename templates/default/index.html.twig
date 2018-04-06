@@ -9,6 +9,8 @@
 </style>
 
 <div class="example-wrapper">
+    <div class="row">
+        <div class="col-10">
     <h1>Hello {{ controller_name }}! ✅</h1>
     <img src="{{ asset('image/000000843.jpg') }}" width="300">
 
@@ -19,5 +21,25 @@
         <li>Your template at <code>templates/default/index.html.twig</code></li>
     </ul>
     <a href="{{ path('show',{id:'new-link-from-index'}) }}">Перейти на show</a>
+        </div>
+        <div class="col-2">
+                {% for product in isTop %}
+
+            <div class="row">
+                <div class="col-12">
+            <div class="card">
+
+                        <a href="{{ path('homepage', {id:product.id}) }}" >
+                           <img class="card-top" src="{{ asset(product.image )}}" alt="{{ product.title }}">
+
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+                {% endfor %}
+        </div>
+    </div>
 </div>
+
 {% endblock %}

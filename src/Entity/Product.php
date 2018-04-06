@@ -40,6 +40,18 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false, options={"default" : 0})
+     */
+    private $isTop;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default" : "//placehold.it/300x200"})
+     */
+    private $image;
+
+
+
     public function getId()
     {
         return $this->id;
@@ -98,6 +110,33 @@ class Product
 
         return $this;
     }
+
+    public function getIsTop(): ?bool
+    {
+        return $this->isTop;
+    }
+
+    public function setIsTop(bool $isTop): self
+    {
+        $this->isTop = $isTop;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+
+
 
 
 }
