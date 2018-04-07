@@ -1,3 +1,7 @@
+body{
+    background-image: url("App/public/image/fon.jpg");
+
+}
 main{
     margin-top:56px;
 }
