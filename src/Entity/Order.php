@@ -25,7 +25,7 @@ class Order
     private $data;
 
     /**
-     * @ORM\Column(type="simple_array")
+     * @ORM\Column(type="string", length=255, nullable=true, options={"default": "new"})
      */
     private $statusOrders;
 

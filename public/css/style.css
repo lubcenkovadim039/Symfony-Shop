@@ -1,5 +1,5 @@
 body{
-    background-image: url("App/public/image/fon.jpg");
+    background-color: whitesmoke;
 
 }
 main{
@@ -16,6 +16,7 @@ h1 {
     color: darkslateblue;
 }
 .card-top {
-    width:250px;
-    height:200px;
+    margin: auto;
+    width:200px;
+    height:150px;
 }
