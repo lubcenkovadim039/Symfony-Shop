@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
- * @ORM\Table(name="orderItems")
+ * @ORM\Table(name="orderitem")
+ *
  */
 class OrderItem
 {
@@ -40,7 +41,7 @@ class OrderItem
     /**
      * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItem")
      * @ORM\JoinColumn(nullable=true)
      */
     private $orders;

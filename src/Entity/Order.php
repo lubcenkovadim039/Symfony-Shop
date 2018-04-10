@@ -49,7 +49,7 @@ class Order
      *
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orderItem")
      */
-    private $orderItems;
+    private $orderItem;
 
     public function __construct()
     {

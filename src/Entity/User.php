@@ -5,11 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
+
 class User implements AdvancedUserInterface, \Serializable
 {
     /**
@@ -21,16 +27,21 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": " "})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="3", max="60")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": " "})
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, options={"default": " "})
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -44,6 +55,12 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $roles;
 
+    /**
+     * @var bool
+     * @Assert\NotBlank()
+     */
+    private $acceptRules;
+
     public function __construct()
     {
         $this->username = '';
@@ -51,6 +68,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->email = '';
         $this->isActive = true;
         $this->roles = ['ROLE_USER'];
+        $this->acceptRules = false;
     }
 
 
@@ -64,7 +82,7 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->username;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername(?string $username): self
     {
         $this->username = $username;
 
@@ -76,7 +94,7 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -88,7 +106,7 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -231,4 +249,22 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->isActive;
     }
+
+    /**
+     * @return bool
+     */
+    public function isAcceptRules(): bool
+    {
+        return $this->acceptRules;
+    }
+
+    /**
+     * @param bool $acceptRules
+     */
+    public function setAcceptRules(bool $acceptRules): void
+    {
+        $this->acceptRules = $acceptRules;
+    }
+
+
 }
