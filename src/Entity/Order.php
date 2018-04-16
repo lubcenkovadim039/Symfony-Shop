@@ -55,7 +55,8 @@ class Order
     {
         $this->statusOrders = 'new';
         $this->status = false;
-        $this->orderItems = new ArrayCollection();
+        $this->data = date("Y-m-d");
+        $this->orderItem = new ArrayCollection();
 
     }
 
@@ -128,15 +129,15 @@ class Order
     /**
      * @return Collection|OrderItem[]
      */
-    public function getOrderItems(): Collection
+    public function getOrderItem(): Collection
     {
-        return $this->orderItems;
+        return $this->orderItem;
     }
 
     public function addOrderItem(OrderItem $orderItem): self
     {
-        if (!$this->orderItems->contains($orderItem)) {
-            $this->orderItems[] = $orderItem;
+        if (!$this->orderItem->contains($orderItem)) {
+            $this->orderItem[] = $orderItem;
             $orderItem->setOrderItem($this);
         }
 
@@ -145,8 +146,8 @@ class Order
 
     public function removeOrderItem(OrderItem $orderItem): self
     {
-        if ($this->orderItems->contains($orderItem)) {
-            $this->orderItems->removeElement($orderItem);
+        if ($this->orderItem->contains($orderItem)) {
+            $this->orderItem->removeElement($orderItem);
             // set the owning side to null (unless already changed)
             if ($orderItem->getOrderItem() === $this) {
                 $orderItem->setOrderItem(null);
@@ -155,4 +156,7 @@ class Order
 
         return $this;
     }
+
+    
+
 }

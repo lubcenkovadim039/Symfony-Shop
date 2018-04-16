@@ -46,6 +46,16 @@ class User implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": true})
      */
     private $isActive;
@@ -66,6 +76,8 @@ class User implements AdvancedUserInterface, \Serializable
         $this->username = '';
         $this->password = '';
         $this->email = '';
+        $this->firstName = '';
+        $this->lastName = '';
         $this->isActive = true;
         $this->roles = ['ROLE_USER'];
         $this->acceptRules = false;
@@ -264,6 +276,30 @@ class User implements AdvancedUserInterface, \Serializable
     public function setAcceptRules(bool $acceptRules): void
     {
         $this->acceptRules = $acceptRules;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
     }
 
 
