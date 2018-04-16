@@ -18,8 +18,10 @@
     </style>
 
     <div class="example-wrapper">
+
+
         <div class="row">
-            <div class="col-10">
+            <div class="col-9">
                 <h1>Hello {{ controller_name }}! ✅</h1>
                 <img src="{{ asset('image/000000843.jpg') }}" width="300">
 
@@ -31,22 +33,23 @@
                 </ul>
                 <a href="{{ path('show',{id:'new-link-from-index'}) }}">Перейти на show</a>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 {% for product in isTop %}
 
-                    <div class="row">
-                        <div class="col-12">
+
                             <div class="card">
                                 <a href="{{ path('product_show', {id:product.id}) }}">
                                     <img class="card-top" src="{{ asset(product.image ) }}" alt="{{ product.title }}">
 
                                 </a>
                             </div>
-                        </div>
-                    </div>
+
                 {% endfor %}
             </div>
         </div>
     </div>
+
+
+
 
 {% endblock %}
