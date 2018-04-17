@@ -18,6 +18,8 @@ class UserType extends AbstractType
             ->add('username')
             ->add('password', PasswordType::class)
             ->add('email', EmailType::class)
+            ->add('firstname' )
+            ->add('lastname')
             ->add('acceptRules', CheckboxType::class)
 
         ;

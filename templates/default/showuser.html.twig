@@ -1,0 +1,19 @@
+
+{% block body %}
+{% if user %}
+    <div class="btn-group dropleft">
+        <button type="btn-group dropleft" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.username }}
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ path('profile') }}">Мой профиль</a>
+            <a class="dropdown-item" href="{{ path('logout') }}">Выйти</a>
+        </div>
+    </div>
+    {% else %}
+    <a class="nav-link" href="{{ path('register') }}">Зарегестрироваться</a>
+        <p> или </p>
+    <a  class="nav-link" href="{{ path('login') }}">Войти</a>
+    {% endif %}
+{% endblock %}
+

@@ -20,8 +20,8 @@ class DefaultController extends Controller
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'isTop' => $products->getTopProducts()
-        ]);
+            'isTop' => $products->getTopProducts(),
+                   ]);
     }
 
     /**
@@ -44,5 +44,15 @@ class DefaultController extends Controller
     public function admin()
     {
         return new Response('<html><body>Admin page!</body></html>');
+    }
+
+    public function showUser()
+    {
+
+
+
+            return $this->render('default/showuser.html.twig', [
+                'user' => $this->getUser()
+            ]);
     }
 }
