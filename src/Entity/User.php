@@ -67,7 +67,7 @@ class User extends BaseUser
      */
     public function isAcceptRules(): bool
     {
-        return $this->acceptRules;
+        return (bool)$this->acceptRules;
     }
 
     /**

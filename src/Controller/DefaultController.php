@@ -40,13 +40,5 @@ class DefaultController extends Controller
 
 
 
-    public function showUser()
-    {
 
-
-
-            return $this->render('default/showuser.html.twig', [
-                'user' => $this->getUser()
-            ]);
-    }
 }
