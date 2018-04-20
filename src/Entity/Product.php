@@ -33,7 +33,7 @@ class Product
     private $description;
 
     /**
-     * @var Categery
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
      * @ORM\JoinColumn(nullable=true)
@@ -99,12 +99,12 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Categery
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Categery $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 
