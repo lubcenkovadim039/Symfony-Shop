@@ -38,7 +38,7 @@ class User extends BaseUser
 
     /**
      * @var bool
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"Registration"})
      */
     private $acceptRules;
 
@@ -56,6 +56,10 @@ class User extends BaseUser
     }
 
 
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
     /**

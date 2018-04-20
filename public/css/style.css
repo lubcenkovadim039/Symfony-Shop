@@ -1,6 +1,7 @@
 body{
     background-color: whitesmoke;
-
+    background-image: url("../image/fn.jpg");
+    max-width: 1366px;
 }
 main{
     margin-top:56px;
@@ -19,4 +20,7 @@ h1 {
     margin: auto;
     width:170px;
     height:120px;
+}
+#b1 {
+    margin-right: 3rem;
 }

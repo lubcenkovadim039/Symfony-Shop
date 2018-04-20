@@ -1,0 +1,11 @@
+id: Порядковый номер
+name: Имя
+parent: Родительская категория
+category list: Список категорий
+admin:
+    category:
+        title: Категории
+    product:
+        title: Продукты
+    user:
+        title: Пользователи
