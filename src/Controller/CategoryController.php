@@ -16,11 +16,14 @@ class CategoryController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository(Category::class);
        // $category = $repo->findBy(['parent' => null ]);
+        $roots = $repo->getRootNodes();
+        $root = reset($roots);
 
         $qb = $repo->createQueryBuilder('cat');
         $qb
             ->select('cat')
-            ->where('cat.parent IS NULL');
+            ->where('cat.parent = :parent')
+            ->setParameter('parent', $root);
      //       ->setParameter('parent', null);
         $category = $qb->getQuery()->execute();
 
