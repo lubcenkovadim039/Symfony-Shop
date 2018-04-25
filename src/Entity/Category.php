@@ -316,4 +316,5 @@ class Category
     {
         return $this->level;
     }
+
 }
