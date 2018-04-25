@@ -1,5 +1,5 @@
 body{
-    background-color: whitesmoke;
+    background-color: white;
     background-image: url("../image/fn.jpg");
     max-width: 1366px;
 }
@@ -14,7 +14,6 @@ h2 {
 }
 h1 {
     text-align: center;
-    color: darkslateblue;
 }
 .card-top {
     margin: auto;
@@ -24,3 +23,35 @@ h1 {
 #b1 {
     margin-right: 3rem;
 }
+
+.second .dropdown-item {
+    position: relative;
+}
+
+.second .dropdown-item:hover .dropdown-menu {
+    display: block;
+}
+
+.second .dropdown-item > a {
+    color: black;
+}
+
+.second .dropdown-item .dropdown-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.second .dropdown-item > a:hover {
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md .navbar-nav .second .dropdown-menu-right {
+        left: 100%;
+        top: -11px;
+
+    }
+}
+
+
