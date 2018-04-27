@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -59,14 +60,25 @@ class Orders
     public function addToCart(Product $product, $quantity)
     {
         $order = $this->getCard();
-        $existingItem = null;
+        $orderItem = null;
 
         foreach ($order->getItems() as $item){
             if($item->getProduct()->getId() == $product->getId()){
-                $existingItem = $item;
+                $orderItem = $item;
                 break;
                 }
         }
 
+        if (!$orderItem){
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($product);
+            $this->em->persist($orderItem);
+            $order->addItem($orderItem);
+        }
+
+        $orderItem->setQuantityOfOrder($orderItem->getQuantityOfOrder() + $quantity);
+        $this->em->flush();
+
+        return $order;
     }
 }

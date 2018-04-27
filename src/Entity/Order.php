@@ -53,7 +53,7 @@ class Order
     /**
      * @var OrderItem[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orderItem")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orders")
      */
     private $items;
 
@@ -61,8 +61,8 @@ class Order
     {
 
         $this->status = self::STATUS_DRAFT;
-        $this->createAt = new \DataTime();
-        $this->isPad = false;
+        $this->createAt = new \DateTime();
+        $this->isPaid = false;
         $this->amout = 0;
         $this->items = new ArrayCollection();
 
@@ -145,7 +145,8 @@ class Order
     {
         if (!$this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setOrderItem($this);
+            $item->setOrders($this);
+            $this->updateAmount();
         }
 
         return $this;
@@ -155,16 +156,26 @@ class Order
     {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
+
             // set the owning side to null (unless already changed)
-            if ($item->getOrderItem() === $this) {
-                $item->setOrderItem(null);
+            if ($item->getOrders() === $this) {
+                $item->setOrders(null);
             }
+            $this->updateAmount();
         }
 
         return $this;
     }
 
+    public function updateAmount()
+     {
+       $total = 0;
 
+       foreach ($this->items as $item){
+           $total += $item->getTotal();
+       }
+       $this->amout = $total;
+     }
 
 
 }

@@ -36,6 +36,9 @@
                 <p class="card-text">{{ product.price }}</p>
                 <p class="card-text">{{ product.description }}</p>
             </div>
+            <div class="card-primary">
+                <a href="{{ path('order_add_to_cart', {'id':product.id}) }}" class="btn btn-default">Добавить в корзину</a>
+            </div>
     </div>
         {% endfor %}
     </div>
