@@ -39,6 +39,7 @@ class UserAdmin extends AbstractAdmin
             ->addIdentifier('email')
             ->addIdentifier('roles')
 
+
         ;
 
     }

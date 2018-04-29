@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $repo = $this->getDoctrine()->getRepository(Category::class);
-       // $category = $repo->findBy(['parent' => null ]);
+       //$categoryfull = $repo->findAll();
 
         $qb = $repo->createQueryBuilder('cat');
         $qb

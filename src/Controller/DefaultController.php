@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
+
 use App\Service\Products;
+use MongoDB\Driver\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +23,7 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'topProducts' => $products->getTopProducts(),
-                   ]);
+        ]);
     }
 
     /**
@@ -29,14 +31,15 @@ class DefaultController extends Controller
      */
     public function show($id = 'default')
     {
-        if($id == 'homepage'){
+        if ($id == 'homepage') {
             return $this->redirectToRoute('homepage');
         }
-        if($id == 'not-found'){
+        if ($id == 'not-found') {
             throw $this->createNotFoundException('Такого нет');
         }
-        return $this->render('default/show.html.twig',['id' => $id]);
+        return $this->render('default/show.html.twig', ['id' => $id]);
     }
+
 
 
 

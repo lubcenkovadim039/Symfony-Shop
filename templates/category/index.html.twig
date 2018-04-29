@@ -11,8 +11,16 @@
         </tr>
         {% for categor in category %}
             <tr>
+                <td> <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="
+                    {%- if categor.imageName -%}{{ vich_uploader_asset(categor,'imageFile') | imagine_filter('squared_category_thumbnail') }}
+                    {%- else -%} //placehold.it/100x100
+                    {%- endif -%}
+                                 " >
+                    </div > </td>
                 <td>{{ categor.id }} </td>
                 <td><a href="{{ path('category_show',{id:categor.id}) }}">{{ categor.name }} </a></td>
+
                  </tr>
         {% endfor %}
     </table>

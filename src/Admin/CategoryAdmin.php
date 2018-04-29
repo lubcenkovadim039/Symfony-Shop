@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CategoryAdmin extends AbstractAdmin
 {
@@ -17,6 +18,7 @@ class CategoryAdmin extends AbstractAdmin
         $form
             ->add('name')
             ->add('parent')
+            ->add('imageFile', VichImageType::class, ['required' => false])
         ;
 
     }
@@ -27,6 +29,7 @@ class CategoryAdmin extends AbstractAdmin
             ->addIdentifier('id')
             ->addIdentifier('name')
             ->add('parent')
+            ->add('imageName', VichImageType::class)
         ;
     }
 

@@ -36,6 +36,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('description')
             ->add('isTop')
             ->add('category')
+            ->addIdentifier('imageName')
         ;
     }
 
