@@ -81,4 +81,39 @@ class Orders
 
         return $order;
     }
+
+    public function getToCart()
+    {
+
+        $orderId = $this->session->get(self::CARD_ID);
+
+        $order = null;
+
+        if($orderId !== null){
+            $result = [];
+            $orderItem = $this->em->getRepository(OrderItem::class)->findBy(['orders' => $orderId]);
+
+
+            foreach ($orderItem as $item){
+                $value['number'] = $orderId;
+                $value['price'] = $item->getPrice();
+                $value['quantity'] = $item->getQuantityOfOrder();
+                $value['total'] = $item->getTotal();
+
+                $prId = $item->getProduct()->getId();
+                $value['product'] = $this->em->getRepository(Product::class)->find($prId)->getTitle();
+
+                $result[] = $value;
+        }
+        }else {
+            return $order;
+        }
+
+
+
+        return $result;
+    }
+
+
+
 }

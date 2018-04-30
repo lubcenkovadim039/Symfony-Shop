@@ -1,6 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% if error %}
+        <p>Корзина пуста!</p>
+    {% else %}
+
+    <h1>Заказ номер {{ id }} </h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Название товара</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Цена товара</th>
+        <th scope="col">Сумма</th>
+    </tr>
+    </thead>
+    {% for item in cart %}
+    <tr>
+        <td>{{ item.product }}</th>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.total }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <th scope="col">Итого</th>
+        <td></td>
+        <td></td>
+        <th>{{ amount }}</th>
+    </tr>
+</table>
+
+{% endif %}
 
 {% endblock %}
 

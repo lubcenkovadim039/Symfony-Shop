@@ -63,7 +63,14 @@
                         </a>
                     </li>
                 {% endif %}
-                <a href="/admin" color="red" >Админка</a>
+                <li class="nav-item ">
+
+                <a href="/admin" color="red" class="nav-link" >Админка</a>
+                </li>
+                <li class="nav-item ">
+
+                <a href="{{ path('show_to_cart') }}" class="nav-link">Oформить заказ</a>
+                </li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
