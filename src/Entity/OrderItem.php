@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
- * @ORM\Table(name="orderItem")
+ * @ORM\Table(name="orderitem")
  *
  */
 class OrderItem
@@ -19,7 +19,10 @@ class OrderItem
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Product
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
+     * @ORM\JoinColumn()
      */
     private $product;
 
@@ -41,7 +44,7 @@ class OrderItem
     /**
      * @var Order
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderItem")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(nullable=true)
      */
     private $orders;
@@ -51,14 +54,15 @@ class OrderItem
         return $this->id;
     }
 
-    public function getProduct(): ?string
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function setProduct(string $product): self
+    public function setProduct(?Product $product): self
     {
         $this->product = $product;
+        $this->setPrice($product->getPrice());
 
         return $this;
     }
@@ -71,6 +75,8 @@ class OrderItem
     public function setQuantityOfOrder(int $quantityOfOrder): self
     {
         $this->quantityOfOrder = $quantityOfOrder;
+        $this->updateTotal();
+
 
         return $this;
     }
@@ -83,6 +89,7 @@ class OrderItem
     public function setPrice($price): self
     {
         $this->price = $price;
+        $this->updateTotal();
 
         return $this;
     }
@@ -92,12 +99,7 @@ class OrderItem
         return $this->total;
     }
 
-    public function setTotal($total): self
-    {
-        $this->total = $total;
 
-        return $this;
-    }
 
     public function getOrders(): ?Order
     {
@@ -109,5 +111,14 @@ class OrderItem
         $this->orders = $orders;
 
         return $this;
+    }
+
+    private function updateTotal()
+    {
+        $this->total = round($this->price * $this->quantityOfOrder, 2);
+
+        if ($this->orders) {
+            $this->orders->updateAmount();
+            }
     }
 }

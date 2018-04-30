@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+
+    const STATUS_DRAFT = 0;
+    const STATUS_ORDERED = 1;
+    const STATUS_SENT = 2;
+    const STATUS_DONE = 3;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -22,17 +28,17 @@ class Order
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $data;
+    private $createAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, options={"default": "new"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $statusOrders;
+    private $status;
 
     /**
      * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $status;
+    private $isPaid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -42,62 +48,63 @@ class Order
     /**
      * @ORM\Column(type="decimal", precision=10,scale=2, nullable=true)
      */
-    private $summaOrders;
+    private $amout;
 
     /**
      * @var OrderItem[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orderItem")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orders")
      */
-    private $orderItem;
+    private $items;
 
     public function __construct()
     {
-        $this->statusOrders = 'new';
-        $this->status = false;
-        $this->data = date("Y-m-d");
-        $this->orderItem = new ArrayCollection();
+
+        $this->status = self::STATUS_DRAFT;
+        $this->createAt = new \DateTime();
+        $this->isPaid = false;
+        $this->amout = 0;
+        $this->items = new ArrayCollection();
 
     }
 
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getData(): ?\DateTimeInterface
+    public function getCreateAt(): ?\DateTimeInterface
     {
-        return $this->data;
+        return $this->createAt;
     }
 
-    public function setData(\DateTimeInterface $data): self
+    public function setCreateAt(?\DateTimeInterface $createAt): self
     {
-        $this->data = $data;
+        $this->createAt = $createAt;
 
         return $this;
     }
 
-    public function getStatus(): ?bool
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(bool $status): self
+    public function setStatus(?string $status): self
     {
         $this->status = $status;
 
         return $this;
     }
 
-    public function getStatusOrders(): ?array
+    public function getIsPaid(): ?bool
     {
-        return $this->statusOrders;
+        return $this->isPaid;
     }
 
-    public function setStatusOrders(array $statusOrders): self
+    public function setIsPaid(bool $isPaid): self
     {
-        $this->statusOrders = $statusOrders;
+        $this->isPaid = $isPaid;
 
         return $this;
     }
@@ -107,21 +114,21 @@ class Order
         return $this->users;
     }
 
-    public function setUsers(string $users): self
+    public function setUsers(?string $users): self
     {
         $this->users = $users;
 
         return $this;
     }
 
-    public function getSummaOrders()
+    public function getAmout()
     {
-        return $this->summaOrders;
+        return $this->amout;
     }
 
-    public function setSummaOrders($summaOrders): self
+    public function setAmout($amout): self
     {
-        $this->summaOrders = $summaOrders;
+        $this->amout = $amout;
 
         return $this;
     }
@@ -129,34 +136,46 @@ class Order
     /**
      * @return Collection|OrderItem[]
      */
-    public function getOrderItem(): Collection
+    public function getItems(): Collection
     {
-        return $this->orderItem;
+        return $this->items;
     }
 
-    public function addOrderItem(OrderItem $orderItem): self
+    public function addItem(OrderItem $item): self
     {
-        if (!$this->orderItem->contains($orderItem)) {
-            $this->orderItem[] = $orderItem;
-            $orderItem->setOrderItem($this);
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setOrders($this);
+            $this->updateAmount();
         }
 
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): self
+    public function removeItem(OrderItem $item): self
     {
-        if ($this->orderItem->contains($orderItem)) {
-            $this->orderItem->removeElement($orderItem);
+        if ($this->items->contains($item)) {
+            $this->items->removeElement($item);
+
             // set the owning side to null (unless already changed)
-            if ($orderItem->getOrderItem() === $this) {
-                $orderItem->setOrderItem(null);
+            if ($item->getOrders() === $this) {
+                $item->setOrders(null);
             }
+            $this->updateAmount();
         }
 
         return $this;
     }
 
-    
+    public function updateAmount()
+     {
+       $total = 0;
+
+       foreach ($this->items as $item){
+           $total += $item->getTotal();
+       }
+       $this->amout = $total;
+     }
+
 
 }

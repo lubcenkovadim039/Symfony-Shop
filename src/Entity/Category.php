@@ -5,16 +5,22 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Tree\Traits\NestedSetEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @Gedmo\Tree(type="nested")
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository"))
  * @ORM\Table(name="category")
  * @Vich\Uploadable()
  */
 class Category
 {
+    use NestedSetEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -37,6 +43,7 @@ class Category
     /**
      * @var Category
      *
+     * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="subcategories")
      * @ORM\JoinColumn(name="parent_id", nullable=true)
      */
@@ -46,8 +53,10 @@ class Category
      * @var Category
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent" )
+     * @ORM\OrderBy({"left" = "ASC"})
      */
     private $subcategories;
+
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -85,7 +94,6 @@ class Category
      * @var \DateTime
      */
     private $updatedAt;
-
 
     public function __construct()
     {
@@ -291,14 +299,22 @@ class Category
 
     /**
      * @param \DateTime $updatedAt
-     * @return Category
+     * @return Product
      */
-    public function setUpdatedAt(\DateTime $updatedAt): Category
+    public function setUpdatedAt(\DateTime $updatedAt): Product
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
+
+    /**
+     * @return int|null
+     */
+    public function getLevel() :?int
+    {
+        return $this->level;
+    }
 
 }

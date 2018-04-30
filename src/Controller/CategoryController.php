@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,12 +16,15 @@ class CategoryController extends Controller
     public function index()
     {
         $repo = $this->getDoctrine()->getRepository(Category::class);
-       //$categoryfull = $repo->findAll();
+       // $category = $repo->findBy(['parent' => null ]);
+        $roots = $repo->getRootNodes();
+        $root = reset($roots);
 
         $qb = $repo->createQueryBuilder('cat');
         $qb
             ->select('cat')
-            ->where('cat.parent IS NULL');
+            ->where('cat.parent = :parent')
+            ->setParameter('parent', $root);
      //       ->setParameter('parent', null);
         $category = $qb->getQuery()->execute();
 
@@ -55,7 +59,15 @@ class CategoryController extends Controller
 
     }
 
+    public function menu(EntityManagerInterface $em)
+    {
 
+        $repo = $em->getRepository(Category::class);
+        $tree = $repo->childrenHierarchy();
 
+        return  $this->render('category/menu.html.twig', [
+            'tree' => $tree
+        ]);
+    }
 
 }
