@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,6 +43,14 @@ class User extends BaseUser
      */
     private $acceptRules;
 
+
+    /**
+     * @var Order[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="user")
+     */
+    private $order;
+
     public function __construct()
     {
         parent::__construct();
@@ -52,6 +62,7 @@ class User extends BaseUser
         $this->lastName = '';
         $this->roles = ['ROLE_USER'];
         $this->acceptRules = false;
+        $this->order = new ArrayCollection();
     }
 
 
@@ -97,6 +108,37 @@ class User extends BaseUser
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrder(): Collection
+    {
+        return $this->order;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->order->contains($order)) {
+            $this->order[] = $order;
+            $order->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->order->contains($order)) {
+            $this->order->removeElement($order);
+            // set the owning side to null (unless already changed)
+            if ($order->getUser() === $this) {
+                $order->setUser(null);
+            }
+        }
 
         return $this;
     }

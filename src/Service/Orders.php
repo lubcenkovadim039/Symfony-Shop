@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -35,7 +36,7 @@ class Orders
        return  $cart = $this->session->has(self::CARD_ID);
     }
 
-    public function getCard( ): Order
+    public function getCard( User $user = null): Order
     {
 
         $orderId = $this->session->get(self::CARD_ID);
@@ -49,17 +50,22 @@ class Orders
         if($order === null){
             $order = new Order();
             $this->em->persist($order);
-            $this->em->flush();
+
         }
 
+
+        if ($user){
+            $order->setUser($user);
+        }
+        $this->em->flush();
         $this->session->set(self::CARD_ID, $order->getId());
 
         return $order;
     }
 
-    public function addToCart(Product $product, $quantity)
+    public function addToCart(Product $product, $quantity, User $user = null)
     {
-        $order = $this->getCard();
+        $order = $this->getCard($user);
         $orderItem = null;
 
         foreach ($order->getItems() as $item){
@@ -82,37 +88,7 @@ class Orders
         return $order;
     }
 
-    public function getToCart()
-    {
 
-        $orderId = $this->session->get(self::CARD_ID);
-
-        $order = null;
-
-        if($orderId !== null){
-            $result = [];
-            $orderItem = $this->em->getRepository(OrderItem::class)->findBy(['orders' => $orderId]);
-
-
-            foreach ($orderItem as $item){
-                $value['number'] = $orderId;
-                $value['price'] = $item->getPrice();
-                $value['quantity'] = $item->getQuantityOfOrder();
-                $value['total'] = $item->getTotal();
-
-                $prId = $item->getProduct()->getId();
-                $value['product'] = $this->em->getRepository(Product::class)->find($prId)->getTitle();
-
-                $result[] = $value;
-        }
-        }else {
-            return $order;
-        }
-
-
-
-        return $result;
-    }
 
 
 

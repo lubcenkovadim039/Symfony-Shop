@@ -1,0 +1,6 @@
+<a href="{{ path('show_to_cart') }}" id="header-to-cart">
+<i class="fas fa-shopping-cart"></i>
+{%- if cart.productsCount > 0 -%}
+    <span class="babge babge-light">{{ cart.productsCount }}</span>
+    {{ cart.amout }}
+{%- endif -%} </a>
