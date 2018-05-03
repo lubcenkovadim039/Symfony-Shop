@@ -15,33 +15,43 @@ class OrderController extends Controller
      */
     public function addToCart(Orders $orders, Request $request, Product $product, $quantity = 1)
     {
-        $orders->addToCart($product, $quantity);
+        $orders->addToCart($product, $quantity, $this->getUser());
+
+        if ($request->isXmlHttpRequest()){
+
+            return $this->render('order/header_cart.html.twig', [
+                'cart' => $orders->getCard()
+            ]);
+        }
 
         return $this->redirect($request->headers->get('referer','/'));
     }
 
     /**
-     * @param Orders $orders
-     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/cart/show", name="show_to_cart")
      */
     public function cart(Orders $orders)
     {
-        $cartId = $orders->getCard()->getId();
-        $amount = $orders->getCard()->getAmout();
-        $cart = $orders->getToCart();
-        $error = false;
-        if($cart == null){
-            $error = true;
-        }
+        $cart = $orders->getCard($this->getUser());
+
 
         return $this->render('order/cart.html.twig',[
             'cart' => $cart,
-            'error' => $error,
-            'id' => $cartId,
-            'amount' => $amount,
+
         ]);
+    }
+
+
+    /**
+     * @Route("/cart/header", name="order_header_cart")
+     */
+    public function headerCart(Orders $orders)
+    {
+        return $this->render('order/header_cart.html.twig', [
+            'cart' => $orders->getCard()
+        ]);
+
     }
 
 

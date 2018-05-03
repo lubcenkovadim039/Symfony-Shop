@@ -40,10 +40,6 @@ class Order
      */
     private $isPaid;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $users;
 
     /**
      * @ORM\Column(type="decimal", precision=10,scale=2, nullable=true)
@@ -56,6 +52,15 @@ class Order
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="orders")
      */
     private $items;
+
+
+    /**
+     * @var User[]
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="order")
+     * @ORM\JoinColumn()
+     */
+    private $user;
 
     public function __construct()
     {
@@ -109,18 +114,6 @@ class Order
         return $this;
     }
 
-    public function getUsers(): ?string
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?string $users): self
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
     public function getAmout()
     {
         return $this->amout;
@@ -168,14 +161,34 @@ class Order
     }
 
     public function updateAmount()
-     {
-       $total = 0;
+    {
+        $total = 0;
 
-       foreach ($this->items as $item){
-           $total += $item->getTotal();
-       }
-       $this->amout = $total;
-     }
+        foreach ($this->items as $item) {
+            $total += $item->getTotal();
+        }
+        $this->amout = $total;
+    }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
 
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProductsCount()
+    {
+        $count = 0;
+
+        foreach ($this->items as $item) {
+            $count += $item->getQuantityOfOrder();
+        }
+        return $count;
+    }
 }
