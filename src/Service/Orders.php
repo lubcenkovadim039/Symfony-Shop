@@ -89,20 +89,30 @@ class Orders
         return $order;
     }
 
-    public function deleteItem( $id)
+    public function deleteItem( OrderItem $item)
     {
 
-
-        $orderItem = $this->em->find(OrderItem::class, $id);
-
-        $this->em->remove($orderItem);
+        $this->em->remove($item);
+        $cart = $this->getCard();
+        $cart->updateAmount();
         $this->em->flush();
 
-        return ;
+        return $cart;
 
 
     }
 
+    public function updateCartItemQuantity(OrderItem $item, $quantity)
+    {
+        $item->setQuantityOfOrder($quantity);
+        $this->em->flush();
 
+        $cart = $this->getCard();
+        $cart->updateAmount();
+        $this->em->flush();
+
+
+        return $cart;
+    }
 
 }
