@@ -58,11 +58,11 @@ class OrderController extends Controller
     /**
      * @Route("/order/item/delete/{id}", name="order_delete_item")
      */
-    public function deleteItem(Orders $orders, Order $order, $id)
+    public function deleteItem(Orders $orders, $id)
     {
 
         $orders->deleteItem($id);
-        $order->updateAmount();
+
 
 
 
