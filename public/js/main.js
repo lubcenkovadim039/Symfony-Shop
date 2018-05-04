@@ -9,4 +9,17 @@ jQuery(function ($) {
             $me.removeAttr('disabled')
         });
     });
+
+    /** $('#delete_item').on('click', function (event) {
+
+        event.preventDefault();
+
+        var $success = confirm('Подвердите удаление')
+
+        if($success){
+           submitComment();
+            }
+
+
+    })**/
 });

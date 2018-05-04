@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use App\Entity\Product;
 use App\Service\Orders;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,5 +55,18 @@ class OrderController extends Controller
 
     }
 
+    /**
+     * @Route("/order/item/delete/{id}", name="order_delete_item")
+     */
+    public function deleteItem(Orders $orders, Order $order, $id)
+    {
 
+        $orders->deleteItem($id);
+        $order->updateAmount();
+
+
+
+
+    return $this->redirect("/cart/show");
+    }
 }

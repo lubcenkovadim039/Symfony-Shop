@@ -60,6 +60,7 @@ class Orders
         $this->em->flush();
         $this->session->set(self::CARD_ID, $order->getId());
 
+
         return $order;
     }
 
@@ -88,7 +89,19 @@ class Orders
         return $order;
     }
 
+    public function deleteItem( $id)
+    {
 
+
+        $orderItem = $this->em->find(OrderItem::class, $id);
+
+        $this->em->remove($orderItem);
+        $this->em->flush();
+
+        return ;
+
+
+    }
 
 
 
