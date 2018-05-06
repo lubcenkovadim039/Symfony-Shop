@@ -1,0 +1,13 @@
+<h1>{{ product.title }}</h1>
+
+
+<p>Цена: {{ product.price }}</p>
+<hr>
+<p>{{ product.description }}
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="
+                    {%- if product.imageName -%}{{ vich_uploader_asset(product,'imageFile') | imagine_filter('squared_product_thumbnail') }}
+                    {%- else -%} //placehold.it/300x300
+                    {%- endif -%}
+                                 " alt="{{ product.title }}">
+</div>
