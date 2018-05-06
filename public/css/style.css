@@ -71,3 +71,10 @@ h1 {
     color:white;
 }
 
+.table td {
+   vertical-align: middle;
+}
+
+.table td.cart-quantity input {
+    width: 90px;
+}
