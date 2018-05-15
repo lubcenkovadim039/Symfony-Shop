@@ -3,5 +3,5 @@
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block body %}
-
+{{ include('product/list.html.twig', {'product':product}) }}
 {% endblock %}

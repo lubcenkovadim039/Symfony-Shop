@@ -1,24 +1,22 @@
 body{
     background-color: white;
-    background-image: url("../image/fn.jpg");
     max-width: 1366px;
 }
 main{
-    margin-top:56px;
+    margin-top:59px;
 }
-h2 {
-    text-align:center;
-}
+
 .logo{
     text-align: center;
 }
-h1 {
-    text-align: center;
+
+.img-product .card{
+    width:120px;
+    height:150px;
 }
-.card-top {
-    margin: auto;
-    width:170px;
-    height:120px;
+
+.card-img-top {
+
 }
 #b1 {
     margin-right: 3rem;

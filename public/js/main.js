@@ -21,7 +21,7 @@ jQuery(function ($) {
    });
 
    $('#confirmedRemoveFromCartButton').click(function () {
-       $catrTable.load(removeToCartHref);
+       $cartTable.load(removeToCartHref);
        reloadHeaderCart();
    });
    //'change' ловит изменения в   input

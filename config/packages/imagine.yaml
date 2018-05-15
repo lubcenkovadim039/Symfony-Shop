@@ -63,12 +63,12 @@ liip_imagine:
 
                         # scale and square the image to the given dimensions
                         thumbnail:
-                            size:          [80, 80]
+                            size:          [150, 120]
                             mode:          inset
                             allow_upscale: true
 
                         # create border by placing image on larger black background
                         background:
-                            size:     [80, 80]
+                            size:     [120, 150]
                             position: center
                             color:    '#fff'
