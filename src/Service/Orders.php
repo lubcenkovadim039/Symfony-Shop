@@ -9,10 +9,16 @@ use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Mailer\TwigSwiftMailer;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class Orders
 {
+
+
     const CARD_ID = 'cart';
 
     /**
@@ -25,10 +31,29 @@ class Orders
      */
     private $em;
 
-    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    /**
+     * @var Mailer
+     */
+    private $mailer;
+
+    /**
+     * @var string
+     */
+    private $fromEmail;
+
+    /**
+     * @var string
+     */
+    private $ordersEmail;
+
+    public function __construct(SessionInterface $session, EntityManagerInterface $em,
+                                Mailer $mailer, $fromEmail, $ordersEmail)
     {
         $this->session = $session;
         $this->em = $em;
+        $this->mailer= $mailer;
+        $this->fromEmail = $fromEmail;
+        $this->ordersEmail = $ordersEmail;
     }
 
     public function hasCart()
@@ -115,4 +140,19 @@ class Orders
         return $cart;
     }
 
+
+    public function makeOrder(Order $order)
+    {
+        $order->setStatus(Order::STATUS_ORDERED);
+        $this->em->flush();
+        $this->session->remove(self::CARD_ID);
+
+
+        $this->mailer->sendMessage('order/mail/manager.msg.twig',
+            ['order' => $order],
+            $this->fromEmail,
+            $this->ordersEmail
+
+        );
+    }
 }
