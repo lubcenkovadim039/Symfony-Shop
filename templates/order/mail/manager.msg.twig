@@ -2,6 +2,7 @@
     Новый заказ{{ order.id }}
 
 {% endblock %}
+
 {% block body_text %}
     Новый заказ №{{ order.id }}
     --------------------------------------
@@ -19,8 +20,9 @@
 
     {% endfor %}
     ---------------------------------
-    Всего:{{ item.total }}
+    Всего:{{ order.amout }}
 {% endblock %}
+
 {% block body_html %}
 
     <h1> Новый заказ {{ order.id }}</h1>
@@ -28,7 +30,7 @@
     <p>Фамилия:{{ order.lastName }}</p>
     <p>Телефон:{{ order.phone }}</p>
     <p>Email:{{ order.email }}</p>
-    <p>Коментарий:{{ order.commet }}</p>
+    <p>Коментарий:{{ order.comment }}</p>
 
     <table class="table table-striped">
         <tr>

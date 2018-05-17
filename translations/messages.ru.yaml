@@ -9,3 +9,5 @@ admin:
         title: Продукты
     user:
         title: Пользователи
+    order:
+        title: Заказы
