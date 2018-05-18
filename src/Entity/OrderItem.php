@@ -45,7 +45,7 @@ class OrderItem
      * @var Order
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $orders;
 
