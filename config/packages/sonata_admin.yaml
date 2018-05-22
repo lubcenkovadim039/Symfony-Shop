@@ -1,11 +1,15 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title: 'Shop'
+    title_logo: image/logoadmin.png
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
     assets:
         extra_javascripts:
             - js/admin.js
+
+        extra_stylesheets:
+            - css/admin.css
 
 sonata_block:
     blocks:

@@ -1,0 +1,19 @@
+.content-wrapper {
+    background-color: green;
+}
+
+.sent {
+    background-color: red;
+}
+
+tr.ordered {
+    background-color: #00b3ee;
+}
+
+.table-striped>tbody>tr.ordered:nth-of-type(odd) {
+    background-color: blue;
+}
+
+.table-striped>tbody>tr.sent:nth-of-type(odd) {
+    background-color: #f8ff30;
+}

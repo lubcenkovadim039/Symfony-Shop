@@ -74,7 +74,7 @@ class Orders
 
         if($order === null){
             $order = new Order();
-            $this->em->persist($order);
+
 
         }
 
@@ -82,8 +82,8 @@ class Orders
         if ($user){
             $order->setUser($user);
         }
-        $this->em->flush();
-        $this->session->set(self::CARD_ID, $order->getId());
+
+
 
 
         return $order;
@@ -92,6 +92,8 @@ class Orders
     public function addToCart(Product $product, $quantity, User $user = null)
     {
         $order = $this->getCard($user);
+        $this->em->persist($order);
+
         $orderItem = null;
 
         foreach ($order->getItems() as $item){
@@ -110,6 +112,8 @@ class Orders
 
         $orderItem->setQuantityOfOrder($orderItem->getQuantityOfOrder() + $quantity);
         $this->em->flush();
+        $this->session->set(self::CARD_ID, $order->getId());
+
 
         return $order;
     }
@@ -118,6 +122,7 @@ class Orders
     {
 
         $this->em->remove($item);
+        $this->em->flush();
         $cart = $this->getCard();
         $cart->updateAmount();
         $this->em->flush();
